@@ -3,6 +3,12 @@ set nocompatible | filetype indent plugin on | syn on
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " Basic Settings
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" Show whitespace
+" Must be inserted before the colorscheme command
+highlight ExtraWhitespace ctermbg=red guibg=red
+autocmd BufEnter * if &ft != 'help' | match ExtraWhitespace /\s\+$/ | endif
+autocmd BufEnter * if &ft == 'help' | match none /\s\+$/ | endif
+
 " Color Scheme
 set t_Co=256
 colorscheme jellybeans
@@ -23,12 +29,6 @@ set expandtab
 set foldmethod=indent
 nnoremap f za
 nnoremap F zi
-
-" Show whitespace
-" Must be inserted before the colorscheme command
-highlight ExtraWhitespace ctermbg=red guibg=red
-autocmd BufEnter * if &ft != 'help' | match ExtraWhitespace /\s\+$/ | endif
-autocmd BufEnter * if &ft == 'help' | match none /\s\+$/ | endif
 
 " Showing line numbers and length
 set number " show line numbers
