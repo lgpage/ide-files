@@ -25,10 +25,13 @@ nnoremap f za
 nnoremap F zi
 
 " Show whitespace
-" Must be inserted after the colorscheme command
+" Must be inserted before the colorscheme command
 highlight ExtraWhitespace ctermbg=red guibg=red
 autocmd BufEnter * if &ft != 'help' | match ExtraWhitespace /\s\+$/ | endif
 autocmd BufEnter * if &ft == 'help' | match none /\s\+$/ | endif
+
+" Remove whitespace on :w
+autocmd BufWritePre * :%s/\s\+$//e
 
 " Showing line numbers and length
 set number " show line numbers
@@ -42,8 +45,12 @@ highlight ColorColumn ctermbg=red
 autocmd! bufwritepost .vimrc source %
 
 " Easier formatting of paragraphs
+" Merge lines
 vmap Q gq
 nmap Q gqap
+
+" Split line
+nmap K i<CR><Esc>
 
 " Copy & Paste
 set pastetoggle=<F2>
@@ -68,7 +75,12 @@ map <c-k> <c-w>k
 map <c-l> <c-w>l
 map <c-h> <c-w>h
 
+" Easier create split windows
+map <Leader>hs <esc>:split<CR>
+map <Leader>vs <esc>:vsplit<CR>
+
 " Easier moving between tabs
+map <Leader>nt <esc>:tabnew<CR>
 map <Leader>n <esc>:tabprevious<CR>
 map <Leader>m <esc>:tabnext<CR>
 
@@ -94,8 +106,8 @@ set nobackup
 set nowritebackup
 set noswapfile
 
-" Ctags
-set tags=./tags,~/.vim/tags/OF230/tags
+" Ctags (OpenFOAM)
+" set tags=./tags,~/.vim/tags/OF230/tags
 
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
@@ -147,12 +159,13 @@ fun! SetupVAM()
     let addons = []
 
     let addons += ["ctrlp"]
-    let addons += ["github:lokaltog/vim-powerline"]
+    let addons += ["powerline"]
+    let addons += ["LycosaExplorer"]
+    let addons += ["YouCompleteMe"]
+
     let addons += ["github:scrooloose/nerdtree"]
     let addons += ["github:scrooloose/nerdcommenter"]
-
-    let addons += ["github:vim-scripts/LycosaExplorer"]
-    let addons += ["github:Valloric/YouCompleteMe"]
+    let addons += ["github:Shutnik/jshint2.vim"]
 
     " let addons += ["snipmate"]
     " let addons += ["vim-snippets"]
@@ -221,6 +234,7 @@ inoremap <silent><C-k> <C-R>=OmniPopup('k')<CR>
 set nofoldenable
 
 " LycosaExplorer Settings
+let g:LycosaExplorerSuppressPythonWarning = 1
 set hidden
 
 " YouCompleteMe Settings
